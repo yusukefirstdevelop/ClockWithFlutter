@@ -4,12 +4,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class ClockView extends StatefulWidget {
-  const ClockView({Key? key}) : super(key: key);
+  final double size;
+
+  const ClockView({Key? key, required this.size}) : super(key: key);
 
   @override
   State<ClockView> createState() => _ClockViewState();
 }
 
+// atualizando a tela a cada 1 segundo
 class _ClockViewState extends State<ClockView> {
   @override
   void initState() {
@@ -21,9 +24,10 @@ class _ClockViewState extends State<ClockView> {
 
   @override
   Widget build(BuildContext context) {
+    //Container onde ta o relogio
     return Container(
-      width: 300,
-      height: 300,
+      width: widget.size,
+      height: 250,
       child: Transform.rotate(
         angle: -pi / 2,
         child: CustomPaint(
@@ -56,7 +60,7 @@ class ClockPainter extends CustomPainter {
     var outlineBrush = Paint()
       ..color = Color(0xFFEAECFF)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 10;
+      ..strokeWidth = size.width / 30;
 
     //Centro do relogio
     var centerfillBrush = Paint()..color = Color(0xFFEAECFF);
@@ -66,7 +70,7 @@ class ClockPainter extends CustomPainter {
       ..color = Colors.orange.shade300
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
-      ..strokeWidth = 4;
+      ..strokeWidth = size.width / 24;
 
     // agulhas dos minutos
     var minHandBrush = Paint()
@@ -74,7 +78,7 @@ class ClockPainter extends CustomPainter {
           .createShader(Rect.fromCircle(center: center, radius: radius))
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
-      ..strokeWidth = 4;
+      ..strokeWidth = size.width / 30;
 
     //agulhas das horas
     var hourHandBrush = Paint()
@@ -82,7 +86,7 @@ class ClockPainter extends CustomPainter {
           .createShader(Rect.fromCircle(center: center, radius: radius))
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
-      ..strokeWidth = 5;
+      ..strokeWidth = size.width / 60;
 
     //pontos de fora
     var dashBrush = Paint()
@@ -92,31 +96,39 @@ class ClockPainter extends CustomPainter {
       ..strokeWidth = 1;
 
     //Desenhando apartir dos dados acima
-    canvas.drawCircle(center, (radius - 40), fillBrush);
-    canvas.drawCircle(center, (radius - 40), outlineBrush);
+    canvas.drawCircle(center, (radius - 0.45), fillBrush);
+    canvas.drawCircle(center, (radius - 0.45), outlineBrush);
 
     //Posicao da agulha dos segundos
-    var secHandleX = centerX + 80 * cos(dateTime.second * 6 * pi / 180);
-    var secHandleY = centerX + 80 * sin(dateTime.second * 6 * pi / 180);
+    var secHandleX =
+        centerX + radius * 0.6 * cos(dateTime.second * 6 * pi / 180);
+    var secHandleY =
+        centerX + radius * 0.6 * sin(dateTime.second * 6 * pi / 180);
     canvas.drawLine(center, Offset(secHandleX, secHandleY), secHandBrush);
 
     //Posicao da agulha dos minutos
-    var minHandleX = centerX + 80 * cos(dateTime.minute * 6 * pi / 180);
-    var minHandleY = centerX + 80 * sin(dateTime.minute * 6 * pi / 180);
+    var minHandleX =
+        centerX + radius * 0.6 * cos(dateTime.minute * 6 * pi / 180);
+    var minHandleY =
+        centerX + radius * 0.6 * sin(dateTime.minute * 6 * pi / 180);
     canvas.drawLine(center, Offset(minHandleX, minHandleY), minHandBrush);
 
     //Posicao da agulha das hora
     var hourHandleX = centerX +
-        60 * cos((dateTime.hour * 30 + dateTime.minute * 0.5) * pi / 180);
+        radius *
+            0.4 *
+            cos((dateTime.hour * 30 + dateTime.minute * 0.5) * pi / 180);
     var hourHandleY = centerX +
-        60 * sin((dateTime.hour * 30 + dateTime.minute * 0.5) * pi / 180);
+        radius *
+            0.4 *
+            sin((dateTime.hour * 30 + dateTime.minute * 0.5) * pi / 180);
     canvas.drawLine(center, Offset(hourHandleX, hourHandleY), hourHandBrush);
 
     canvas.drawCircle(center, 8, centerfillBrush);
 
     // pontos que ficaram fora do relogio
     var outerCircleRadius = radius;
-    var innerCircleRadius = radius - 12;
+    var innerCircleRadius = radius * 0.9;
     for (double i = 0; i < 360; i += 12) {
       var x1 = centerX + outerCircleRadius * cos(i * pi / 180);
       var y1 = centerX + outerCircleRadius * sin(i * pi / 180);
