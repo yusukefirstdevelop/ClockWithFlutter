@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:uitraining/menu_info.dart';
+import 'package:uitraining/models/menu_info.dart';
+import 'package:uitraining/views/alarm_page.dart';
+import 'package:uitraining/views/clock_page.dart';
 import 'package:uitraining/views/clock_view.dart';
 import 'clock_view.dart';
 import "package:uitraining/data.dart";
@@ -45,97 +47,102 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: Consumer<MenuInfo>(
               builder: (context, value, child) {
-                if (value.menuType != MenuType.clock) return Container();
-                return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 32, vertical: 64),
-                  alignment: Alignment.center,
-                  //CHAMANDO O RELOGIO CRIADO NO clock_view
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      // ignore: prefer_const_constructors
-                      Flexible(
-                        flex: 1,
-                        fit: FlexFit.tight,
-                        child: Text(
-                          "Clock",
-                          style: const TextStyle(
-                              fontFamily: "avenir",
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white,
-                              fontSize: 24),
-                        ),
-                      ),
-                      Flexible(
-                        flex: 2,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            // Hora e minutos
-                            Text(
-                              formattedTime,
-                              style: TextStyle(
-                                  fontFamily: "avenir",
-                                  color: Colors.white,
-                                  fontSize: 64),
-                            ),
-                            // dia , mes , dia da semana de hoje
-                            Text(
-                              formattedDate,
-                              style: TextStyle(
-                                  fontFamily: "avenir",
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white,
-                                  fontSize: 20),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Flexible(
-                        flex: 4,
-                        fit: FlexFit.tight,
-                        child: Align(
-                          alignment: Alignment.center,
-                          // child: ClockView(size: 250),
-                          child: ClockView(
-                            size: MediaQuery.of(context).size.height / 2,
+                if (value.menuType == MenuType.clock) 
+                  return ClockPage();
+                 else if (value.menuType == MenuType.alarm) {
+                  return AlarmPage();
+                } else {
+                  return Container(
+                    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 64),
+                    alignment: Alignment.center,
+                    //CHAMANDO O RELOGIO CRIADO NO clock_view
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        // ignore: prefer_const_constructors
+                        Flexible(
+                          flex: 1,
+                          fit: FlexFit.tight,
+                          child: Text(
+                            "Clock",
+                            style: const TextStyle(
+                                fontFamily: "avenir",
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                                fontSize: 24),
                           ),
                         ),
-                      ),
-                      Flexible(
-                        flex: 2,
-                        fit: FlexFit.tight,
-                        child: Column(
-                          children: [
-                            Text(
-                              "Timezone",
-                              style: TextStyle(
-                                  fontFamily: "avenir",
-                                  color: Colors.white,
-                                  fontSize: 24),
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.language,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(height: 16),
-                                Text(
-                                  "UTC" + offsetSign + timezoneString,
-                                  style: TextStyle(
-                                      fontFamily: "avenir",
-                                      color: Colors.white,
-                                      fontSize: 24),
-                                ),
-                              ],
-                            ),
-                          ],
+                        Flexible(
+                          flex: 2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              // Hora e minutos
+                              Text(
+                                formattedTime,
+                                style: TextStyle(
+                                    fontFamily: "avenir",
+                                    color: Colors.white,
+                                    fontSize: 64),
+                              ),
+                              // dia , mes , dia da semana de hoje
+                              Text(
+                                formattedDate,
+                                style: TextStyle(
+                                    fontFamily: "avenir",
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white,
+                                    fontSize: 20),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
+                        Flexible(
+                          flex: 4,
+                          fit: FlexFit.tight,
+                          child: Align(
+                            alignment: Alignment.center,
+                            // child: ClockView(size: 250),
+                            child: ClockView(
+                              size: MediaQuery.of(context).size.height / 2,
+                            ),
+                          ),
+                        ),
+                        Flexible(
+                          flex: 2,
+                          fit: FlexFit.tight,
+                          child: Column(
+                            children: [
+                              Text(
+                                "Timezone",
+                                style: TextStyle(
+                                    fontFamily: "avenir",
+                                    color: Colors.white,
+                                    fontSize: 24),
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.language,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(height: 16),
+                                  Text(
+                                    "UTC" + offsetSign + timezoneString,
+                                    style: TextStyle(
+                                        fontFamily: "avenir",
+                                        color: Colors.white,
+                                        fontSize: 24),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
               },
             ),
           ),
