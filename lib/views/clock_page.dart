@@ -12,6 +12,15 @@ class ClockPage extends StatefulWidget {
 class _ClockPageState extends State<ClockPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: Text(
+        "HELLO",
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+          color: Colors.amber,
+        ),
+      ),
+    );
   }
 }

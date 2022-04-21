@@ -47,9 +47,9 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: Consumer<MenuInfo>(
               builder: (context, value, child) {
-                if (value.menuType == MenuType.clock) 
+                if (value.menuType == MenuType.clock)
                   return ClockPage();
-                 else if (value.menuType == MenuType.alarm) {
+                else if (value.menuType == MenuType.alarm) {
                   return AlarmPage();
                 } else {
                   return Container(
@@ -180,7 +180,10 @@ class _HomePageState extends State<HomePage> {
               Text(
                 currentMenuInfo.title ?? '',
                 style: TextStyle(
-                    fontFamily: 'avenir', color: Colors.white, fontSize: 14),
+                  fontFamily: 'avenir',
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
               ),
             ],
           ),

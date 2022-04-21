@@ -16,6 +16,7 @@ class ClockView extends StatefulWidget {
 class _ClockViewState extends State<ClockView> {
   @override
   void initState() {
+    //Invoca repetidamente com Duration(tempo de intervalo) intervalos até ser cancelado com a função cancelar .
     Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {});
     });
@@ -92,7 +93,7 @@ class ClockPainter extends CustomPainter {
     var dashBrush = Paint()
       ..color = Color(0xFFEAECFF)
       ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round
+      // ..strokeCap = StrokeCap.round
       ..strokeWidth = 1;
 
     //Desenhando apartir dos dados acima
